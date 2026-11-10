@@ -1,0 +1,1 @@
+{"band": 3.0, "by_type": {"matching_headings": [0, 4], "sentence_completion": [0, 4], "tfng": [2, 5]}, "checked_at": "2026-11-10T15:36:48Z", "correct": 2, "date": "2026-11-10", "errors": [], "id": "2026-11-10-R-0001-i2", "issue": 2, "kind": "reading-academic", "minutes": null, "model": null, "module": "reading", "raw40": 6, "task": "R-0001", "total": 13}
