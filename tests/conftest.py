@@ -34,7 +34,7 @@ def repo(tmp_path: Path) -> Repo:
 @pytest.fixture(autouse=True)
 def no_real_keys(monkeypatch):
     for name in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_FOUNDRY_API_KEY",
-                 "AZURE_OPENAI_API_KEY", "XAI_API_KEY", "DEEPSEEK_API_KEY"):
+                 "AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT", "XAI_API_KEY", "DEEPSEEK_API_KEY"):
         monkeypatch.delenv(name, raising=False)
 
 
@@ -59,7 +59,7 @@ def assessment(task=6.0, coherence=6.5, lexical=6.0, grammar=5.5, errors=None, c
 class FakeBackend:
     """Подставная модель: отдаёт заранее заданные ответы и запоминает запросы."""
 
-    name = "anthropic"
+    name = "azure"
 
     def __init__(self):
         self.queue: list = []
@@ -91,7 +91,7 @@ def gh() -> FakeGitHub:
 @pytest.fixture
 def ctx(repo, gh, fake_ai):
     config = repo.config()
-    llm = LLM(repo, config, backends={"anthropic": fake_ai})
+    llm = LLM(repo, config, backends={"azure": fake_ai})
     return Context(repo, gh, llm=llm, today=TODAY)
 
 
