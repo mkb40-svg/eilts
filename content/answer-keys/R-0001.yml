@@ -1,0 +1,28 @@
+id: R-0001
+answers:
+  "1": {answer: ["FALSE"], type: tfng}
+  "2": {answer: ["TRUE"], type: tfng}
+  "3": {answer: ["FALSE"], type: tfng}
+  "4": {answer: ["NOT GIVEN"], type: tfng}
+  "5": {answer: ["TRUE"], type: tfng}
+  "6": {answer: ["ii"], type: matching_headings}
+  "7": {answer: ["vi"], type: matching_headings}
+  "8": {answer: ["v"], type: matching_headings}
+  "9": {answer: ["i"], type: matching_headings}
+  "10": {answer: ["roots"], type: sentence_completion, max_words: 2}
+  "11": {answer: ["weight"], type: sentence_completion, max_words: 2}
+  "12": {answer: ["moisture"], type: sentence_completion, max_words: 2}
+  "13": {answer: ["reduced fees"], type: sentence_completion, max_words: 2}
+evidence:
+  "1": "In parts of northern Europe, farmhouses were covered with layers of turf for hundreds of years, mainly because grass and soil provided excellent insulation during long winters."
+  "2": "Each layer must be carefully designed, because a leak in a roof covered with soil is much harder to find and repair than a leak in an ordinary one."
+  "3": "They are relatively light, need little maintenance and are generally not intended for people to walk on."
+  "5": "The soil and plants absorb a large share of the rain and release it slowly, either through evaporation or by allowing it to drain away gradually over several hours."
+  "6": "What distinguishes the modern green roof is its engineering."
+  "7": "A planted roof behaves more like a sponge."
+  "8": "Ecologists generally see green roofs as stepping stones that help wildlife move across a city rather than as complete habitats in themselves."
+  "9": "Despite these advantages, green roofs remain the exception rather than the rule."
+  "10": "a barrier that stops roots from pushing through"
+  "11": "so the building beneath must be strong enough to carry the extra weight"
+  "12": "they release moisture into the air, which has a cooling effect"
+  "13": "several cities have introduced incentives, such as grants or reduced fees, for owners who install green roofs"

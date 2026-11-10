@@ -1,0 +1,36 @@
+# Закрытый список категорий ошибок. Агент обязан выбирать только из него,
+# чтобы банк ошибок считал повторы одной и той же проблемы.
+# ключ: название для ученика
+
+writing:
+  article: Артикли
+  tense: Видо-временные формы
+  agreement: Согласование подлежащего и сказуемого
+  preposition: Предлоги
+  word_form: Форма слова (part of speech)
+  word_choice: Выбор слова
+  collocation: Коллокации
+  spelling: Орфография
+  punctuation: Пунктуация
+  sentence_structure: Строение предложения (run-on, fragment)
+  plural_countable: Число и исчисляемость
+  linking: Связки и логические переходы
+  paragraphing: Деление на абзацы
+  idea_development: Развитие и поддержка идей
+  task_coverage: Ответ не на всё задание
+  overview: Нет обзора (Task 1)
+  data_accuracy: Неточные данные (Task 1)
+  tone_register: Тон и стиль письма
+  repetition: Повторы слов
+  other: Другое
+
+reading:
+  synonym_paraphrase: Не узнал перефразирование
+  negation: Пропустил отрицание или ограничение
+  partial_info: Ответ по неполной информации
+  not_given_confusion: Путаница FALSE и NOT GIVEN
+  distractor: Отвлёкся на дистрактор
+  word_limit: Превышен лимит слов
+  spelling: Орфография в ответе
+  wrong_location: Искал не в том абзаце
+  other: Другое

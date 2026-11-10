@@ -1,0 +1,28 @@
+id: R-0003
+answers:
+  "1": {answer: ["B"], type: multiple_choice}
+  "2": {answer: ["C"], type: multiple_choice}
+  "3": {answer: ["B"], type: multiple_choice}
+  "4": {answer: ["B"], type: multiple_choice}
+  "5": {answer: ["NO"], type: ynng}
+  "6": {answer: ["NO"], type: ynng}
+  "7": {answer: ["YES"], type: ynng}
+  "8": {answer: ["NOT GIVEN"], type: ynng}
+  "9": {answer: ["YES"], type: ynng}
+  "10": {answer: ["familiar"], type: summary_completion, max_words: 1}
+  "11": {answer: ["independence"], type: summary_completion, max_words: 1}
+  "12": {answer: ["tunnels"], type: summary_completion, max_words: 1}
+  "13": {answer: ["deliberate"], type: summary_completion, max_words: 1}
+evidence:
+  "1": "The change has happened so quickly that it is easy to forget how recent it is."
+  "2": "Satellite navigation has made travel less stressful for millions of people, particularly those who are anxious about driving in unfamiliar areas."
+  "3": "We can arrive at a destination having paid almost no attention to the route, and many people find that they are unable to repeat a journey without the device that guided them the first time."
+  "4": "I am cautious about such claims."
+  "5": "I have no wish to return to the days of arguing with a passenger over a badly folded road map."
+  "6": "The finding will not surprise anyone who has followed a phone across a city and remembered nothing of it afterwards."
+  "7": "Popular articles often present tentative findings as if they were established facts, and this does little to help the public understand the real state of knowledge."
+  "9": "schools could do more to teach basic map reading, which is often treated as an old-fashioned subject with little relevance to modern life"
+  "10": "A city learned in this way becomes familiar in a way that a city experienced through a screen never quite does."
+  "11": "There is also the simple matter of independence."
+  "12": "Batteries run out, signals fail in tunnels and remote valleys"
+  "13": "What I am suggesting is a more deliberate approach to using them."

@@ -1,0 +1,65 @@
+# Настройки IELTS Self-Prep.
+# Цель, дату экзамена и формат агент берёт из анкеты «Старт» (progress/profile.json).
+# Здесь — то, что не меняется от анкеты: расписание, модели ИИ, бюджет, хостинг.
+
+schedule:
+  # Время в cron задаётся в UTC в файлах .github/workflows/daily-task.yml и weekly-review.yml.
+  # Эти поля нужны для текстов и расчёта «дней без активности».
+  timezone: UTC
+  reminder_after_days: 2        # нет отправок N дней — одно мягкое напоминание
+  max_load_multiplier: 1.5      # пропуски не копятся сверх 1.5 обычной нагрузки
+  mock_every_weeks: 2           # пробный экзамен (этап v1)
+
+agent:
+  # Без ключа ИИ работают проверка Reading по ключу, подсчёт слов, план и прогресс;
+  # оценка эссе, разборы и ответы наставника включаются, когда у роли есть ключ.
+  #
+  # Провайдеры ИИ. Ключи хранятся ТОЛЬКО в Settings → Secrets → Actions,
+  # здесь — лишь имя секрета (api_key_env). Неиспользуемые провайдеры можно не трогать.
+  providers:
+    anthropic:                    # Claude напрямую: секрет ANTHROPIC_API_KEY
+      type: anthropic
+    azure_claude:                 # Claude в Azure (Microsoft Foundry): оплата через Azure
+      type: anthropic_foundry
+      resource: ""                # имя ресурса Foundry; или переменная ANTHROPIC_FOUNDRY_RESOURCE
+      api_key_env: ANTHROPIC_FOUNDRY_API_KEY
+    azure_openai:                 # модели Azure OpenAI (имя модели = имя развёртывания)
+      type: openai_compatible
+      base_url: "https://<ресурс>.openai.azure.com/openai/v1"
+      api_key_env: AZURE_OPENAI_API_KEY
+      auth_header: api-key
+      max_tokens_param: max_completion_tokens
+    xai:                          # Grok (xAI)
+      type: openai_compatible
+      base_url: "https://api.x.ai/v1"
+      api_key_env: XAI_API_KEY
+    deepseek:                     # DeepSeek
+      type: openai_compatible
+      base_url: "https://api.deepseek.com"
+      api_key_env: DEEPSEEK_API_KEY
+
+  # Какая модель выполняет какую роль. effort учитывается только у Claude.
+  # Пример: разборы и наставник на DeepSeek, оценка эссе на Claude:
+  #   explainer: {provider: deepseek, model: <имя модели из консоли DeepSeek>}
+  roles:
+    examiner: {provider: anthropic, model: claude-opus-5-5, effort: high}     # оценка Writing
+    explainer: {provider: anthropic, model: claude-opus-5-5, effort: medium}  # разбор ошибок Reading
+    coach: {provider: anthropic, model: claude-opus-5-5, effort: medium}      # вопросы, итоги недели
+  feedback_language: ru         # ru | en
+  budget_usd_month: 10          # лимит расходов на ИИ в месяц; при превышении ИИ не вызывается
+  max_errors_in_comment: 10
+  recheck:
+    low_confidence: 0.6         # ниже — вторая независимая оценка
+    jump_from_median: 1.0       # отличие от медианы прошлых работ больше — вторая оценка
+    disagreement: 0.5           # две оценки расходятся больше — третья, итог = медиана
+
+scoring:
+  # Итог одной работы Writing из четырёх критериев: floor_half — вниз до 0.5 (осторожно),
+  # ielts — как общий балл (.25 вверх до .5, .75 вверх до целого).
+  writing_task_rounding: floor_half
+
+hosting:
+  # single_public — один публичный репозиторий: сайт + данные (по умолчанию).
+  # public_site_private_data — сайт в публичном, работы в приватном (этап v2).
+  # single_private — приватный репозиторий на платном тарифе GitHub.
+  mode: single_public

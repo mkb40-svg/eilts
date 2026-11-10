@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" font-family="Segoe UI, Arial, sans-serif" font-size="12">
+<rect width="720" height="300" rx="10" fill="#ffffff"/>
+<text x="48" y="22" font-size="14" font-weight="600" fill="#1f2328">Динамика band по работам</text>
+<line x1="48" x2="696" y1="260.0" y2="260.0" stroke="#e6e8eb"/>
+<text x="38" y="264.0" text-anchor="end" fill="#656d76">3</text>
+<line x1="48" x2="696" y1="222.7" y2="222.7" stroke="#e6e8eb"/>
+<text x="38" y="226.7" text-anchor="end" fill="#656d76">4</text>
+<line x1="48" x2="696" y1="185.3" y2="185.3" stroke="#e6e8eb"/>
+<text x="38" y="189.3" text-anchor="end" fill="#656d76">5</text>
+<line x1="48" x2="696" y1="148.0" y2="148.0" stroke="#e6e8eb"/>
+<text x="38" y="152.0" text-anchor="end" fill="#656d76">6</text>
+<line x1="48" x2="696" y1="110.7" y2="110.7" stroke="#e6e8eb"/>
+<text x="38" y="114.7" text-anchor="end" fill="#656d76">7</text>
+<line x1="48" x2="696" y1="73.3" y2="73.3" stroke="#e6e8eb"/>
+<text x="38" y="77.3" text-anchor="end" fill="#656d76">8</text>
+<line x1="48" x2="696" y1="36.0" y2="36.0" stroke="#e6e8eb"/>
+<text x="38" y="40.0" text-anchor="end" fill="#656d76">9</text>
+<text x="360.0" y="150.0" text-anchor="middle" fill="#656d76">Пока нет оценённых работ</text>
+</svg>

@@ -1,0 +1,13 @@
+[project]
+name = "ielts-self-prep"
+version = "0.1.0"
+description = "Самостоятельная подготовка к IELTS с ИИ-наставником на GitHub"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["agent/src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+src = ["agent/src"]

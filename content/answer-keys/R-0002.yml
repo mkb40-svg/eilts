@@ -1,0 +1,28 @@
+id: R-0002
+answers:
+  "1": {answer: ["FALSE"], type: tfng}
+  "2": {answer: ["TRUE"], type: tfng}
+  "3": {answer: ["TRUE"], type: tfng}
+  "4": {answer: ["FALSE"], type: tfng}
+  "5": {answer: ["NOT GIVEN"], type: tfng}
+  "6": {answer: ["TRUE"], type: tfng}
+  "7": {answer: ["D"], type: matching_information}
+  "8": {answer: ["C"], type: matching_information}
+  "9": {answer: ["E"], type: matching_information}
+  "10": {answer: ["B"], type: matching_information}
+  "11": {answer: ["staff intranet", "intranet"], type: note_completion, max_words: 2}
+  "12": {answer: ["application form"], type: note_completion, max_words: 2}
+  "13": {answer: ["half"], type: note_completion, max_words: 2}
+evidence:
+  "1": "The programme begins with a half-day welcome session led by the Human Resources team, which covers pay arrangements, working hours and the main company policies."
+  "2": "New staff must also complete the online health and safety course before they are allowed to use any equipment in the warehouse."
+  "3": "Compulsory courses must be renewed every two years, and staff will receive an email reminder six weeks before their certificate expires."
+  "4": "Employees who work with forklift trucks or other specialist machinery must hold a valid operator's licence, and the company will pay the full cost of obtaining and renewing it."
+  "6": "This leave may be used to attend classes, prepare for examinations or sit the examinations themselves."
+  "7": "Please note that study leave cannot be carried over into the following year, and any days not used by the end of December will be lost."
+  "8": "Staff who receive this support and then leave the company within twelve months of completing the course may be asked to repay part of the amount."
+  "9": "It is your responsibility to upload copies of any certificates you receive from external providers."
+  "10": "Compulsory training always takes place during normal working hours, so no one will be asked to attend in their own time."
+  "11": "A list of approved courses, ranging from basic spreadsheet skills to team leadership, is available on the staff intranet."
+  "12": "To apply, employees should fill in an application form and discuss it with their line manager, who must approve the request before a place can be booked."
+  "13": "For longer courses leading to a recognised qualification, the company may contribute up to half of the fees."

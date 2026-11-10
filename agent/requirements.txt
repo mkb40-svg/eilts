@@ -1,0 +1,4 @@
+anthropic==2.7.0
+PyYAML==6.0.3
+jsonschema==4.26.0
+Markdown==3.11.3
