@@ -1,0 +1,90 @@
+name: "Старт: анкета ученика"
+description: Заполните один раз — агент создаст профиль, диагностику и план подготовки.
+title: "Старт подготовки"
+labels: ["start"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ответьте на несколько вопросов. Регистрация не нужна — профиль хранится в этом репозитории
+        (`progress/profile.json`). Анкету можно отправить ещё раз, чтобы обновить цель или дату:
+        история результатов при этом не стирается.
+  - type: dropdown
+    id: module
+    attributes:
+      label: Формат экзамена
+      options:
+        - Academic
+        - General Training
+    validations:
+      required: true
+  - type: dropdown
+    id: target_band
+    attributes:
+      label: Целевой балл (band)
+      options:
+        - "5.5"
+        - "6.0"
+        - "6.5"
+        - "7.0"
+        - "7.5"
+        - "8.0"
+        - "8.5"
+      default: 3
+    validations:
+      required: true
+  - type: input
+    id: exam_date
+    attributes:
+      label: Дата экзамена
+      description: В формате ГГГГ-ММ-ДД. Если даты ещё нет, укажите примерную.
+      placeholder: "2027-03-15"
+    validations:
+      required: true
+  - type: input
+    id: hours_per_week
+    attributes:
+      label: Часов в неделю на подготовку
+      description: Число от 2 до 30.
+      placeholder: "6"
+    validations:
+      required: true
+  - type: dropdown
+    id: current_level
+    attributes:
+      label: Текущий уровень (если знаете)
+      options:
+        - Не знаю
+        - около 5.0
+        - около 5.5
+        - около 6.0
+        - около 6.5
+        - около 7.0
+        - 7.5 и выше
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: feedback_language
+    attributes:
+      label: Язык пояснений
+      options:
+        - Русский
+        - English
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: weak_areas
+    attributes:
+      label: Что даётся труднее всего (по ощущениям)
+      placeholder: "Например: эссе не укладываю в 40 минут, путаю FALSE и NOT GIVEN"
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Приватность
+      options:
+        - label: Я понимаю, что в публичном репозитории мои работы и прогресс видны всем (под ником GitHub).
+          required: true

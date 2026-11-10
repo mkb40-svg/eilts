@@ -1,0 +1,50 @@
+name: "Writing: отправить эссе или письмо"
+description: Task 1 или Task 2 — агент проверит по четырём критериям IELTS.
+title: "Writing"
+labels: ["writing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Пишите сами и без словаря — так оценка будет ближе к экзаменной.
+        Оценка ИИ ориентировочная и не является официальным результатом IELTS.
+  - type: input
+    id: task_id
+    attributes:
+      label: ID задания
+      description: Например W2-0001. Оставьте пустым, если пишете на свою тему.
+      placeholder: "W2-0001"
+    validations:
+      required: false
+  - type: dropdown
+    id: task_type
+    attributes:
+      label: Тип задания
+      options:
+        - "Task 2 (эссе)"
+        - "Task 1 Academic (график, таблица, процесс)"
+        - "Task 1 General (письмо)"
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: custom_prompt
+    attributes:
+      label: Своя тема (если нет ID задания)
+      description: Вставьте текст задания целиком.
+    validations:
+      required: false
+  - type: textarea
+    id: essay
+    attributes:
+      label: Ваш текст
+      description: Вставьте ответ целиком, без заголовка.
+    validations:
+      required: true
+  - type: input
+    id: minutes
+    attributes:
+      label: Сколько минут писали
+      placeholder: "40"
+    validations:
+      required: false

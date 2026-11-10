@@ -1,0 +1,12 @@
+name: "Вопрос наставнику"
+description: Спросите про грамматику, стратегию, разбор — ответит ИИ-наставник.
+title: "Вопрос"
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Вопрос
+      placeholder: "Чем отличается FALSE от NOT GIVEN?"
+    validations:
+      required: true

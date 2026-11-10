@@ -1,0 +1,35 @@
+name: "Reading: отправить ответы"
+description: Ответы на задание Reading — проверка по ключу и разбор ошибок.
+title: "Reading"
+labels: ["reading"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        По одному ответу на строку: номер вопроса и ответ. Регистр не важен.
+        Орфография важна, как на экзамене: ошибка в слове = неверный ответ.
+  - type: input
+    id: task_id
+    attributes:
+      label: ID задания
+      placeholder: "R-0001"
+    validations:
+      required: true
+  - type: textarea
+    id: answers
+    attributes:
+      label: Ответы
+      placeholder: |
+        1. TRUE
+        2. NOT GIVEN
+        3. B
+        4. water vapour
+    validations:
+      required: true
+  - type: input
+    id: minutes
+    attributes:
+      label: Сколько минут заняло
+      placeholder: "20"
+    validations:
+      required: false
