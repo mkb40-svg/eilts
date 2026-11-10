@@ -21,47 +21,50 @@ Listening, Speaking и пробные экзамены — следующий э
 
 ## Как начать (около 15 минут)
 
-1. Нажмите **Use this template → Create a new repository**. Выберите **Public**, если нужен бесплатный сайт
-   (работы и прогресс тогда видны всем под вашим ником), или **Private** (сайт на Pages — только на платном тарифе).
+1. Создайте репозиторий и загрузите в него **содержимое** этой папки так, чтобы в корне репозитория лежали
+   `.github`, `agent`, `content`, `config.yml`, `README.md`. Папка обязательно называется **`.github` — с точкой**:
+   без неё GitHub не увидит ни сценарии Actions, ни формы Issue. **Public** — бесплатный сайт (работы видны всем
+   под вашим ником), **Private** — сайт на Pages только на платном тарифе.
 2. **Settings → Pages → Source: GitHub Actions** — включает сайт. Затем **Actions → «Сайт на GitHub Pages» → Run workflow**.
    Сайт откроется по адресу `https://<ваш-логин>.github.io/<имя-репозитория>/`.
-3. *(Можно позже)* **Settings → Secrets and variables → Actions → New repository secret** — ключ ИИ (таблица ниже).
+3. *(Можно позже)* подключите ИИ — раздел ниже.
 4. **Issues → New issue → «Старт: анкета ученика»**. Через минуту агент ответит: профиль, план и две Issue диагностики.
 5. Выполните диагностику и отвечайте **комментарием прямо в Issue задания**. Дальше задания приходят каждый день.
 
 Время ежедневного задания задаётся одной строкой `cron` (в UTC) в
 [.github/workflows/daily-task.yml](.github/workflows/daily-task.yml).
 
-## Подключение ИИ
+## Подключение ИИ (Azure)
 
-Ключи хранятся только в **Secrets** репозитория — в файлах их нет. Каждую роль агента можно отдать своему
-провайдеру в [config.yml](config.yml), раздел `agent.roles`:
+По умолчанию агент работает через ваш ресурс Azure с двумя развёртываниями:
 
-| Провайдер | `provider` в config.yml | Секрет | Заметки |
-| --- | --- | --- | --- |
-| Claude (Anthropic) | `anthropic` | `ANTHROPIC_API_KEY` | По умолчанию; строгий JSON, кэш промпта |
-| Claude в Azure (Microsoft Foundry) | `azure_claude` | `ANTHROPIC_FOUNDRY_API_KEY` + переменная `ANTHROPIC_FOUNDRY_RESOURCE` | Оплата через подписку Azure |
-| Azure OpenAI | `azure_openai` | `AZURE_OPENAI_API_KEY` | `model` = имя развёртывания; укажите свой `base_url` |
-| Grok (xAI) | `xai` | `XAI_API_KEY` | `model` — имя модели из консоли xAI |
-| DeepSeek | `deepseek` | `DEEPSEEK_API_KEY` | Данные обрабатываются на серверах DeepSeek |
+| Роль | Модель (развёртывание) | Что делает |
+| --- | --- | --- |
+| `examiner` | `DeepSeek-V4-Pro` | Оценка Writing по четырём критериям |
+| `examiner_recheck` | `grok-4.6` | Вторая, независимая оценка, когда первая вызывает сомнения |
+| `explainer` | `DeepSeek-V4-Pro` | Разбор ошибок Reading |
+| `coach` | `DeepSeek-V4-Pro` | Ответы на вопросы, итоги недели |
 
-Пример: оценка эссе на Claude, разборы и вопросы — на DeepSeek:
+**Settings → Secrets and variables → Actions:**
 
-```yaml
-roles:
-  examiner: {provider: anthropic, model: claude-opus-5-5, effort: high}
-  explainer: {provider: deepseek, model: <имя модели DeepSeek>}
-  coach: {provider: deepseek, model: <имя модели DeepSeek>}
-```
+1. Вкладка **Secrets → New repository secret**: имя `AZURE_OPENAI_API_KEY`, значение — ключ ресурса
+   (портал Azure → ваш ресурс → Keys and Endpoint → KEY 1).
+2. Вкладка **Variables → New repository variable**: имя `AZURE_OPENAI_ENDPOINT`, значение — адрес ресурса вида
+   `https://<ресурс>.openai.azure.com`. Можно вставить и полный адрес развёртывания — агент возьмёт из него адрес ресурса.
 
-Какая модель оценивает эссе точнее, покажет калибровка: положите в `agent/calibration/writing/` работы,
-оценённые преподавателем, и запустите **Actions → «Калибровка экзаменатора»** (подробнее —
-[agent/calibration/README.md](agent/calibration/README.md)).
+Адрес ресурса хранится в переменной, а не в файлах, чтобы не светить его в публичном репозитории.
+Имена развёртываний в [config.yml](config.yml) должны совпадать с Azure с учётом регистра. Агент сам подстраивается,
+если модель не принимает какой-то параметр (`max_completion_tokens` ↔ `max_tokens`, `reasoning_effort`, JSON-режим).
+
+Поменять модели местами — одна строка в `agent.roles`. Там же можно подключить Claude, xAI или DeepSeek напрямую
+(провайдеры `anthropic`, `azure_claude`, `xai`, `deepseek`). Какая модель оценивает эссе точнее, покажет калибровка:
+положите в `agent/calibration/writing/` работы, оценённые преподавателем, и запустите
+**Actions → «Калибровка экзаменатора»** ([подробнее](agent/calibration/README.md)).
 
 **Расходы.** Лимит на месяц — `budget_usd_month` в `config.yml`; при превышении ИИ отключается до нового месяца,
-проверки по ключу продолжают работать. Цены моделей — в [agent/rubrics/pricing.yml](agent/rubrics/pricing.yml):
-для Grok, DeepSeek и Azure OpenAI впишите их сами, иначе расход по ним считается как 0.
-Ориентир на Claude: проверка эссе ≈ $0.11 на Opus 5.5, ≈ $0.06 на Sonnet 5.5, меньше цента на Haiku 5.5.
+проверки по ключу продолжают работать. Цены — в [agent/rubrics/pricing.yml](agent/rubrics/pricing.yml)
+(по сторонним трекерам цен Azure; сверьте со своим счётом). Ориентир: проверка эссе на DeepSeek-V4-Pro ≈ $0.05,
+обычный месяц занятий ≈ $2–3; точнее покажет `progress/usage.jsonl` после первых работ.
 
 ## Как это устроено
 

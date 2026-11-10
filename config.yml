@@ -14,37 +14,43 @@ agent:
   # Без ключа ИИ работают проверка Reading по ключу, подсчёт слов, план и прогресс;
   # оценка эссе, разборы и ответы наставника включаются, когда у роли есть ключ.
   #
-  # Провайдеры ИИ. Ключи хранятся ТОЛЬКО в Settings → Secrets → Actions,
-  # здесь — лишь имя секрета (api_key_env). Неиспользуемые провайдеры можно не трогать.
+  # Провайдеры ИИ. Ключи хранятся ТОЛЬКО в Settings → Secrets and variables → Actions,
+  # здесь — лишь имена секретов и переменных. Неиспользуемые провайдеры можно не трогать.
   providers:
+    azure:                        # ОСНОВНОЙ: ваш ресурс Azure с развёртываниями DeepSeek-V4-Pro и grok-4.6
+      type: openai_compatible
+      api_style: azure_deployments          # {ресурс}/openai/deployments/{модель}/chat/completions
+      endpoint_env: AZURE_OPENAI_ENDPOINT   # переменная (Variables): https://<ресурс>.openai.azure.com
+      api_version: "2025-01-01-preview"
+      api_key_env: AZURE_OPENAI_API_KEY     # секрет (Secrets): ключ ресурса Azure
+      auth_header: api-key
+      max_tokens_param: max_completion_tokens  # если модель не примет — агент сам переключит на max_tokens
+      min_output_tokens: 32000              # рассуждающим моделям нужен запас: рассуждение тоже тратит токены
+      reasoning_effort: true                # передавать effort роли как reasoning_effort
+      timeout_seconds: 600
     anthropic:                    # Claude напрямую: секрет ANTHROPIC_API_KEY
       type: anthropic
-    azure_claude:                 # Claude в Azure (Microsoft Foundry): оплата через Azure
+    azure_claude:                 # Claude в Azure (Microsoft Foundry)
       type: anthropic_foundry
       resource: ""                # имя ресурса Foundry; или переменная ANTHROPIC_FOUNDRY_RESOURCE
       api_key_env: ANTHROPIC_FOUNDRY_API_KEY
-    azure_openai:                 # модели Azure OpenAI (имя модели = имя развёртывания)
-      type: openai_compatible
-      base_url: "https://<ресурс>.openai.azure.com/openai/v1"
-      api_key_env: AZURE_OPENAI_API_KEY
-      auth_header: api-key
-      max_tokens_param: max_completion_tokens
-    xai:                          # Grok (xAI)
+    xai:                          # Grok напрямую у xAI
       type: openai_compatible
       base_url: "https://api.x.ai/v1"
       api_key_env: XAI_API_KEY
-    deepseek:                     # DeepSeek
+    deepseek:                     # DeepSeek напрямую (данные — на серверах DeepSeek)
       type: openai_compatible
       base_url: "https://api.deepseek.com"
       api_key_env: DEEPSEEK_API_KEY
 
-  # Какая модель выполняет какую роль. effort учитывается только у Claude.
-  # Пример: разборы и наставник на DeepSeek, оценка эссе на Claude:
-  #   explainer: {provider: deepseek, model: <имя модели из консоли DeepSeek>}
+  # Какая модель выполняет какую роль. model = имя развёртывания в Azure (с учётом регистра).
+  # effort: low | medium | high.
   roles:
-    examiner: {provider: anthropic, model: claude-opus-5-5, effort: high}     # оценка Writing
-    explainer: {provider: anthropic, model: claude-opus-5-5, effort: medium}  # разбор ошибок Reading
-    coach: {provider: anthropic, model: claude-opus-5-5, effort: medium}      # вопросы, итоги недели
+    examiner: {provider: azure, model: DeepSeek-V4-Pro, effort: high}        # оценка Writing
+    examiner_recheck: {provider: azure, model: grok-4.6, effort: high}       # вторая, независимая оценка при сомнениях
+    explainer: {provider: azure, model: DeepSeek-V4-Pro, effort: medium}     # разбор ошибок Reading
+    coach: {provider: azure, model: DeepSeek-V4-Pro, effort: medium}         # вопросы, итоги недели
+  # Поменять местами модели — одна строка: например examiner: {provider: azure, model: grok-4.6, effort: high}
   feedback_language: ru         # ru | en
   budget_usd_month: 10          # лимит расходов на ИИ в месяц; при превышении ИИ не вызывается
   max_errors_in_comment: 10
