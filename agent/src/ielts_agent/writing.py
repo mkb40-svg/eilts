@@ -160,15 +160,21 @@ def assess(
     rounding = config["scoring"].get("writing_task_rounding", "floor_half")
     recheck = config["agent"]["recheck"]
 
+    # Вторая оценка — другой моделью (роль examiner_recheck), если она настроена и доступна:
+    # независимое мнение надёжнее, чем повтор той же модели.
+    second_role = "examiner_recheck" if llm.has_role("examiner_recheck") and llm.available("examiner_recheck") else "examiner"
+    roles_used = ["examiner"]
     runs = [llm.json_call("examiner", system, user, schema)]
     first = _run_band(runs[0], rounding)
     needs_second = float(runs[0].get("confidence", 1)) < recheck["low_confidence"] or (
         previous_median is not None and abs(first - previous_median) > recheck["jump_from_median"]
     )
     if needs_second:
-        runs.append(llm.json_call("examiner", system, user, schema))
+        runs.append(llm.json_call(second_role, system, user, schema))
+        roles_used.append(second_role)
         if abs(_run_band(runs[1], rounding) - first) > recheck["disagreement"]:
             runs.append(llm.json_call("examiner", system, user, schema))
+            roles_used.append("examiner")
 
     criteria = {
         k: bands.snap_half(median(bands.snap_half(r["criteria"][k]["band"]) for r in runs)) for k in CRITERIA
@@ -194,5 +200,5 @@ def assess(
         "runs": len(runs),
         "run_bands": [_run_band(r, rounding) for r in runs],
         "injection_detected": any(r.get("injection_detected") for r in runs),
-        "model": llm.describe("examiner"),
+        "model": " + ".join(dict.fromkeys(llm.describe(r) for r in roles_used)),
     }

@@ -18,12 +18,8 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "mock_every_weeks": 2,
     },
     "agent": {
-        "providers": {"anthropic": {"type": "anthropic"}},
-        "roles": {
-            "examiner": {"provider": "anthropic", "model": "claude-opus-5-5", "effort": "high"},
-            "explainer": {"provider": "anthropic", "model": "claude-opus-5-5", "effort": "medium"},
-            "coach": {"provider": "anthropic", "model": "claude-opus-5-5", "effort": "medium"},
-        },
+        "providers": {},
+        "roles": {},
         "feedback_language": "ru",
         "budget_usd_month": 10,
         "max_errors_in_comment": 10,

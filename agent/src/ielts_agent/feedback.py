@@ -12,8 +12,8 @@ DISCLAIMER = "_Оценка ориентировочная и не являет�
 
 NO_AI = {
     "no_key": (
-        "ИИ для этой роли не подключён: добавьте ключ в Settings → Secrets → Actions "
-        "(какой именно — в `config.yml`, раздел `agent.providers`)."
+        "ИИ для этой роли не подключён: в Settings → Secrets and variables → Actions нужны секрет "
+        "`AZURE_OPENAI_API_KEY` и переменная `AZURE_OPENAI_ENDPOINT` (README, раздел «Подключение ИИ»)."
     ),
     "budget": "Месячный лимит расходов на ИИ (`budget_usd_month` в `config.yml`) исчерпан — ИИ включится в новом месяце.",
     "error": "ИИ не смог выполнить разбор (отказ модели или техническая ошибка). Работа сохранена; повторите отправку позже.",
