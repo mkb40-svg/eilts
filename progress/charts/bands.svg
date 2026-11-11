@@ -15,6 +15,8 @@
 <text x="38" y="77.3" text-anchor="end" fill="#656d76">8</text>
 <line x1="48" x2="696" y1="36.0" y2="36.0" stroke="#e6e8eb"/>
 <text x="38" y="40.0" text-anchor="end" fill="#656d76">9</text>
+<line x1="48" x2="696" y1="166.7" y2="166.7" stroke="#1a7f37" stroke-dasharray="6 4"/>
+<text x="696" y="160.7" text-anchor="end" fill="#1a7f37">цель 5.5</text>
 <circle cx="48.0" cy="260.0" r="4" fill="#c2571a"/>
 <rect x="48" y="278" width="12" height="12" rx="2" fill="#2f6fd6"/>
 <text x="66" y="288" fill="#1f2328">Writing</text>
